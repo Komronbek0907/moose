@@ -18,10 +18,11 @@ class Contact(models.Model):
     full_name = models.CharField(max_length=50)
     email = models.EmailField()
     subject = models.CharField(max_length=150)
-    massage = models.TextField()
+    message = models.TextField()
 
-    is_solved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_published = models.BooleanField(default=True)
+    is_solved = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.full_name}::{self.email}"

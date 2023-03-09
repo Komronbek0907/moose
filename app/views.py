@@ -20,24 +20,23 @@ def blog_view(request):
 
 
 def blog_single_view(request, pk):
+    post = Blog.objects.get(id=pk)
     if request.method == "POST":
         data = request.POST
         name = data.get("name")
         email = data.get("email")
         website = data.get("website")
         message = data.get("message")
-        post = pk
         obj = Comment.objects.create(name=name, email=email, website=website, message=message, post=post)
         obj.save()
         return redirect(f'/blog/{pk}/')
 
-    post = Blog.objects.get(id=pk)
     comments = Comment.objects.filter(post=post.id)
     context = {
         'post': post,
         'comments': comments
     }
-    return render(request, 'blog.single.html', context)
+    return render(request, 'blog-single.html', context)
 
 
 def about_view(request):
@@ -50,8 +49,8 @@ def contact_view(request):
         full_name = data.get("full_name")
         subject = data.get("subject")
         email = data.get('email')
-        massage = data.get("massage")
-        obj = Contact.objects.create(full_name=full_name, subject=subject, email=email, massage=massage)
+        message = data.get("message")
+        obj = Contact.objects.create(full_name=full_name, subject=subject, email=email, message=message)
         obj.save()
         return redirect('/contact')
     return render(request, 'contact.html')
